@@ -1,22 +1,31 @@
 package com.leo;
 
 import com.leo.config.CConfigHibernate;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.*;
 import org.hibernate.Session;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.awt.*;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Main {
+public class Main extends Application {
     private static final ArrayList<CUser> usermas = new ArrayList<>();
     private static final ArrayList<CGood> goodmas = new ArrayList<>();
     private static final ArrayList<COrder> ordermas = new ArrayList<>();
@@ -159,7 +168,7 @@ public class Main {
             e.printStackTrace();
         }
     }
-    public static void LoadFromXLSX(String[] args){
+    public static void LoadFromXLSX(){
         loading();
         /*OrderReport();*/
         try {Session session = CConfigHibernate.getSessionFactory().openSession();
@@ -188,6 +197,93 @@ public class Main {
         }
     }
     public static void main(String[] args){
+        Application.launch();
+    }
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Leo's Application");
+        primaryStage.setWidth(500);
+        primaryStage.setHeight(400);
+        Button button1 = new Button("Загрузить");
+        Label label1 = new Label("Загрузить данные в базу данных из XLSX файла");
+        button1.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                button1.setText("Загрузка");
+                LoadFromXLSX();
+                button1.setText("Загрузить");
+            }
+        });
+        Label label2 = new Label("Просмотреть данные из таблицы");
+        Button button2 = new Button("Открыть");
+        button2.setOnAction( e -> {
+            LookUp();
+        });
+        GridPane root = new GridPane();
+        root.add(label1, 0, 0);
+        root.add(button1, 1, 0);
+        root.add(label2,0, 1);
+        root.add(button2,1, 1);
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
 
+        primaryStage.show();
+    }
+    public void LookUp(){
+        Stage stage = new Stage();
+        stage.setTitle("База данных");
+        GridPane leaf = new GridPane();
+        Label label1 = new Label("Посмотреть таблицу 'Пользователи'");
+        Label label2 = new Label("Посмотреть таблицу 'Товары'");
+        Label label3 = new Label("Посмотреть таблицу 'Заказы'");
+        Label label4 = new Label("Посмотреть отчет по продажам среди мужчин");
+        Button button1 = new Button("Посмотреть");
+        Button button2 = new Button("Посмотреть");
+        Button button3 = new Button("Посмотреть");
+        Button button4 = new Button("Посмотреть");
+        button1.setOnAction(e ->{
+
+        });
+        button2.setOnAction(e ->{
+
+        });
+        button3.setOnAction(e ->{
+
+        });
+        button4.setOnAction(e ->{
+
+        });
+
+
+
+
+
+
+        Scene scene = new Scene(leaf);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
+    private void UserView(){
+        try {Session session = CConfigHibernate.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            for (int i = 0; i < usermas.size(); i++){
+                session.save(usermas.get(i));
+            }
+            for (int i = 0; i < goodmas.size(); i++){
+                session.save(goodmas.get(i));
+            }
+            for (int i = 0; i < ordermas.size(); i++){
+                session.save(ordermas.get(i));
+            }
+
+            session.getTransaction().commit();
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

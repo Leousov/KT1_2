@@ -14,5 +14,10 @@
     <orderEntry type="library" name="postgresql" level="project" />
     <orderEntry type="library" name="hibernate.orm.core" level="project" />
     <orderEntry type="library" name="javax.persistence.api" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.base" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.controls" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.graphics" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.fxml" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
