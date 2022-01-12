@@ -1,9 +1,14 @@
 package com.leo.dao;
 
 import com.leo.CGood;
+import com.leo.CUser;
 import com.leo.config.CConfigHibernate;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,8 +37,9 @@ public class GoodDAO {
         transaction1.commit();
         session.close();
     }
-    public List<CGood> findall(){
-        List<CGood> good = (List<CGood>) CConfigHibernate.getSessionFactory().openSession().createQuery("From Good").list();
-        return good;
+    public ObservableList<CGood> findall() {
+        ArrayList<CGood> goods = (ArrayList<CGood>) CConfigHibernate.getSessionFactory().openSession().createQuery("FROM CGood").list();
+        ObservableList<CGood> goods1 = FXCollections.observableArrayList(goods);
+        return goods1;
     }
 }

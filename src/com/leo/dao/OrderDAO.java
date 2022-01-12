@@ -1,9 +1,14 @@
 package com.leo.dao;
 
 import com.leo.COrder;
+import com.leo.CUser;
 import com.leo.config.CConfigHibernate;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,8 +37,9 @@ public class OrderDAO {
         transaction1.commit();
         session.close();
     }
-    public List<COrder> findall(){
-        List<COrder> order = (List<COrder>) CConfigHibernate.getSessionFactory().openSession().createQuery("From Order").list();
-        return order;
+    public ObservableList<COrder> findall() {
+        ArrayList<COrder> orders = (ArrayList<COrder>) CConfigHibernate.getSessionFactory().openSession().createQuery("FROM COrder").list();
+        ObservableList<COrder> orders1 = FXCollections.observableArrayList(orders);
+        return orders1;
     }
 }
