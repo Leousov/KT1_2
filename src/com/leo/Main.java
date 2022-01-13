@@ -108,63 +108,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-    private static void OrderReport(){
-    int Ordnumb = ordermas.size();
-    ArrayList<CGood> ManGoods = new ArrayList<>();
-    int Usernumb = usermas.size();
-    for (int i = 0; i < Ordnumb; i++){
-        for (int j = 0; j < Usernumb; j++){
-            if ((ordermas.get(i).getUid().equals(usermas.get(j).getId())) && (usermas.get(j).getGender())){
-                for (int h = 0; h < goodmas.size(); h++){
-                    if (ordermas.get(i).getGid().equals(goodmas.get(h).getId())){
-                        if (!ManGoods.contains(goodmas.get(h))) {
-                            ManGoods.add(goodmas.get(h));
-                        }
-                    }
-                }
-            }
-        }
-    }
-    WriteOrder(ManGoods);
-    }
-    private static void WriteOrder(ArrayList<CGood> manGoods) {
-        XWPFDocument document = new XWPFDocument();
-        XWPFParagraph paragraph1 = document.createParagraph();
-        XWPFRun run1 = paragraph1.createRun();
-        paragraph1.setAlignment(ParagraphAlignment.CENTER);
-        paragraph1.setVerticalAlignment(TextAlignment.TOP);
-        run1.setBold(true);
-        run1.setFontFamily("TimesNewRoman");
-        run1.setFontSize(16);
-        run1.setUnderline(UnderlinePatterns.THICK);
-        run1.setText("Отчет по продажам товаров.");
-        XWPFParagraph paragraph2 = document.createParagraph();
-        XWPFRun run2 = paragraph2.createRun();
-        paragraph2.setAlignment(ParagraphAlignment.LEFT);
-        paragraph2.setVerticalAlignment(TextAlignment.AUTO);
-        run2.setFontSize(14);
-        run2.setFontFamily("TimesNewRoman");
-        run2.setText("Товары, покупаемые мужчинами" );
-        XWPFTable table = document.createTable();
-        table.setWidth("100%");
-        XWPFTableRow row = table.getRow(0);
-        row.getCell(0).setText("Наименование товара");
-        row.addNewTableCell().setText("Категория");
-        row.addNewTableCell().setText("Стоимость");
-        for (CGood good: manGoods){
-            row = table.createRow();
-            row.getCell(0).setText(good.getName());
-            row.getCell(1).setText(good.getCategory());
-            row.getCell(2).setText(String.valueOf(good.getPrice()));
-        }
-        try (FileOutputStream fileOutputStream = new FileOutputStream("D:\\java\\files\\Report.docx")) {
-            document.write(fileOutputStream);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public static void LoadFromXLSX(){
         loading();
         /*OrderReport();*/

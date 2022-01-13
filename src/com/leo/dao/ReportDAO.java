@@ -20,5 +20,4 @@ public class ReportDAO {
         ObservableList<CGood> goods1 = FXCollections.observableArrayList(goods);
         return goods1;
     }
-
 }
