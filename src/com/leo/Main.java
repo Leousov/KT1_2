@@ -4,10 +4,7 @@ import com.leo.config.CConfigHibernate;
 import com.leo.service.SGood;
 import com.leo.service.SOrder;
 import com.leo.service.SUser;
-import com.leo.sheets.InfoGoods;
-import com.leo.sheets.InfoOrders;
-import com.leo.sheets.InfoReport;
-import com.leo.sheets.InfoUsers;
+import com.leo.sheets.*;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
@@ -121,7 +118,7 @@ public class Main extends Application {
                 id1 = UUID.fromString(row.getCell(0).getStringCellValue());
                 id2 = UUID.fromString(row.getCell(1).getStringCellValue());
                 date = row.getCell(2).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                ordermas.add(new COrder(id1, id2, date));
+                ordermas.add(new COrder(UUID.randomUUID(), id1, id2, date));
             }
         }
         catch (Exception e) {
@@ -242,7 +239,7 @@ public class Main extends Application {
         Label label3 = new Label("Редактировать базу данных");
         Button button3 = new Button("Редактировать");
         button3.setOnAction(e ->{
-
+            UpdateSheet updateSheet = new UpdateSheet();
         });
 
         GridPane root = new GridPane();
@@ -250,6 +247,9 @@ public class Main extends Application {
         root.add(button1, 1, 0);
         root.add(label2,0, 1);
         root.add(button2,1, 1);
+        root.add(label3,0, 2);
+        root.add(button3,1, 2);
+
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

@@ -1,6 +1,8 @@
 package com.leo.sheets;
 
+import com.leo.CGood;
 import com.leo.COrder;
+import com.leo.CUser;
 import com.leo.service.SOrder;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
@@ -28,6 +30,9 @@ public class InfoOrders {
         ObservableList<COrder> list = sOrder.findAllUsers();
         TableView<COrder> table = new TableView<COrder>(list);
         //table.setPrefSize(250,200);
+        TableColumn<COrder, UUID> idColumn = new TableColumn<COrder, UUID>("Id");
+        idColumn.setCellValueFactory(new PropertyValueFactory<COrder, UUID>("id"));
+        table.getColumns().add(idColumn);
         TableColumn<COrder, UUID> uidColumn = new TableColumn<COrder, UUID>("UId");
         uidColumn.setCellValueFactory(new PropertyValueFactory<COrder, UUID>("uid"));
         table.getColumns().add(uidColumn);

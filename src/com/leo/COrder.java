@@ -8,9 +8,9 @@ import java.util.UUID;
 @Table(name = "orders")
 public class COrder{
     @Id
-    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
-    @GeneratedValue(generator = "UUIDGenerator")
-    @Column(name = "id", updatable = true, nullable = false)
+    /*@GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
+    @GeneratedValue(generator = "UUIDGenerator")*/
+    @Column(name = "id", updatable = true, nullable = true)
     public UUID id;
     /*@GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")*/
@@ -44,15 +44,25 @@ public class COrder{
     public void setDate(LocalDate date) {
         this.date = date;
     }
-    public COrder(UUID user_id, UUID good_id, LocalDate date){
+
+    public UUID getId() {
+        return id;
+    }
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public COrder(UUID id, UUID user_id, UUID good_id, LocalDate date){
+        setId(id);
         setDate(date);
         setGid(good_id);
         setUid(user_id);
     }
     public COrder(){
+        setId(UUID.randomUUID());
         setUid(null);
         setGid(null);
         setDate(LocalDate.now());
-        id = UUID.randomUUID();
+
     }
 }

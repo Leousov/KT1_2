@@ -17,11 +17,11 @@ public class SOrder {
     public void AddUser(COrder user){
         orderDAO.addorder(user);
     }
-    public void UpdateUser(COrder user){
-        orderDAO.updateorder(user);
+    public void UpdateOrder(COrder order){
+        orderDAO.updateorder(order);
     }
-    public void DeleteUser(COrder user){
-        orderDAO.deleteorder(user);
+    public void DeleteOrder(COrder order){
+        orderDAO.deleteorder(order);
     }
     public ObservableList<COrder> findAllUsers(){
         return orderDAO.findall();
