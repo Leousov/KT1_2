@@ -9,8 +9,8 @@ import java.util.UUID;
 @Table(name = "users")
 public class CUser{
     @Id
-    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
-    @GeneratedValue(generator = "UUIDGenerator")
+    /*@GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
+    @GeneratedValue(generator = "UUIDGenerator")*/
     @Column(name = "id", updatable = true, nullable = false)
     public UUID id;
     @Column(name = "login", updatable = true)

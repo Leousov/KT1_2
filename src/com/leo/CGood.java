@@ -7,8 +7,8 @@ import java.util.UUID;
 @Table(name = "goods")
 public class CGood{
     @Id
-    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
-    @GeneratedValue(generator = "UUIDGenerator")
+    /*@GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
+    @GeneratedValue(generator = "UUIDGenerator")*/
     @Column(name = "id", updatable = true, nullable = false)
     private UUID id;
     @Column(name = "name", updatable = true)

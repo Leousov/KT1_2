@@ -4,6 +4,10 @@ import com.leo.config.CConfigHibernate;
 import com.leo.service.SGood;
 import com.leo.service.SOrder;
 import com.leo.service.SUser;
+import com.leo.sheets.InfoGoods;
+import com.leo.sheets.InfoOrders;
+import com.leo.sheets.InfoReport;
+import com.leo.sheets.InfoUsers;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
@@ -61,6 +65,7 @@ public class Main extends Application {
                 if (row == null){
                     continue;
                 }
+                gender = false;
                 id = UUID.fromString(row.getCell(0).getStringCellValue());
                 login = row.getCell(1).getStringCellValue();
                 name = row.getCell(2).getStringCellValue();
@@ -216,6 +221,7 @@ public class Main extends Application {
         primaryStage.setTitle("Leo's Application");
         primaryStage.setWidth(500);
         primaryStage.setHeight(400);
+
         Button button1 = new Button("Загрузить");
         Label label1 = new Label("Загрузить данные в базу данных из XLSX файла");
         button1.setOnAction(new EventHandler<ActionEvent>(){
@@ -226,16 +232,25 @@ public class Main extends Application {
                 button1.setText("Загрузить");
             }
         });
-        Label label2 = new Label("Смотреть\\Редактировать базу данных");
+
+        Label label2 = new Label("Смотреть базу данных");
         Button button2 = new Button("Открыть");
         button2.setOnAction( e -> {
             LookUp();
         });
+
+        Label label3 = new Label("Редактировать базу данных");
+        Button button3 = new Button("Редактировать");
+        button3.setOnAction(e ->{
+
+        });
+
         GridPane root = new GridPane();
         root.add(label1, 0, 0);
         root.add(button1, 1, 0);
         root.add(label2,0, 1);
         root.add(button2,1, 1);
+
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
@@ -255,150 +270,16 @@ public class Main extends Application {
         Button button3 = new Button("Посмотреть");
         Button button4 = new Button("Посмотреть");
         button1.setOnAction(e ->{
-            Stage stage1 = new Stage();
-            stage1.setTitle("Пользователи");
-            GridPane leaf1 = new GridPane();
-            Scene scene1 = new Scene(leaf1);
-            stage1.setScene(scene1);
-            SUser sUser = new SUser();
-            ObservableList<CUser> list = sUser.findAllUsers();
-            TableView<CUser> table = new TableView<CUser>(list);
-            //table.setPrefSize(250,200);
-            TableColumn<CUser, UUID> idColumn = new TableColumn<CUser, UUID>("Id");
-            idColumn.setCellValueFactory(new PropertyValueFactory<CUser, UUID>("id"));
-            table.getColumns().add(idColumn);
-            TableColumn<CUser, String> loginColumn = new TableColumn<CUser, String>("Login");
-            loginColumn.setCellValueFactory(new PropertyValueFactory<CUser, String>("login"));
-            table.getColumns().add(loginColumn);
-            TableColumn<CUser, String> nameColumn = new TableColumn<CUser, String>("Name");
-            nameColumn.setCellValueFactory(new PropertyValueFactory<CUser, String>("name"));
-            table.getColumns().add(nameColumn);
-            TableColumn<CUser, Boolean> genderColumn = new TableColumn<CUser, Boolean>("Gender");
-            genderColumn.setCellValueFactory(new PropertyValueFactory<CUser, Boolean>("gender"));
-            table.getColumns().add(genderColumn);
-            TableColumn<CUser, String> dateColumn = new TableColumn<CUser, String>("Date of birth");
-            //dateColumn.setCellValueFactory(new PropertyValueFactory<CUser, String>("datebirth"));
-            dateColumn.setCellValueFactory(celldata -> {
-                return new ObservableValue<String>() {
-                    @Override
-                    public void addListener(ChangeListener<? super String> changeListener) {
-
-                    }
-
-                    @Override
-                    public void removeListener(ChangeListener<? super String> changeListener) {
-
-                    }
-
-                    @Override
-                    public String getValue() {
-                        return celldata.getValue().getDateBirth().toString();
-                    }
-
-                    @Override
-                    public void addListener(InvalidationListener invalidationListener) {
-
-                    }
-
-                    @Override
-                    public void removeListener(InvalidationListener invalidationListener) {
-
-                    }
-                } ;
-            });
-            table.getColumns().add(dateColumn);
-            leaf1.setAlignment(Pos.BASELINE_CENTER);
-            leaf1.setHgrow(table, Priority.ALWAYS);
-            leaf1.setVgrow(table, Priority.ALWAYS);
-            leaf1.add(table,0,0);
-            stage1.show();
-            stage1.alwaysOnTopProperty();
+            InfoUsers infoUsers = new InfoUsers();
         });
         button2.setOnAction(e ->{
-            Stage stage1 = new Stage();
-            stage1.setTitle("Товары");
-            GridPane leaf1 = new GridPane();
-            Scene scene1 = new Scene(leaf1);
-            stage1.setScene(scene1);
-            SGood sGood = new SGood();
-            ObservableList<CGood> list = sGood.findAllUsers();
-            TableView<CGood> table = new TableView<CGood>(list);
-            //table.setPrefSize(250,200);
-            TableColumn<CGood, UUID> idColumn = new TableColumn<CGood, UUID>("Id");
-            idColumn.setCellValueFactory(new PropertyValueFactory<CGood, UUID>("id"));
-            table.getColumns().add(idColumn);
-            TableColumn<CGood, String> nameColumn = new TableColumn<CGood, String>("Name");
-            nameColumn.setCellValueFactory(new PropertyValueFactory<CGood, String>("name"));
-            table.getColumns().add(nameColumn);
-            TableColumn<CGood, Double> priceColumn = new TableColumn<CGood, Double>("Price");
-            priceColumn.setCellValueFactory(new PropertyValueFactory<CGood, Double>("price"));
-            table.getColumns().add(priceColumn);
-            TableColumn<CGood, String> categoryColumn = new TableColumn<CGood, String>("Category");
-            categoryColumn.setCellValueFactory(new PropertyValueFactory<CGood, String>("category"));
-            table.getColumns().add(categoryColumn);
-            leaf1.setAlignment(Pos.BASELINE_CENTER);
-            leaf1.setHgrow(table, Priority.ALWAYS);
-            leaf1.setVgrow(table, Priority.ALWAYS);
-            leaf1.add(table,0,0);
-            stage1.show();
-            stage1.alwaysOnTopProperty();
+            InfoGoods infoGoods = new InfoGoods();
         });
         button3.setOnAction(e ->{
-            Stage stage1 = new Stage();
-            stage1.setTitle("Заказы");
-            GridPane leaf1 = new GridPane();
-            Scene scene1 = new Scene(leaf1);
-            stage1.setScene(scene1);
-            SOrder sOrder = new SOrder();
-            ObservableList<COrder> list = sOrder.findAllUsers();
-            TableView<COrder> table = new TableView<COrder>(list);
-            //table.setPrefSize(250,200);
-            TableColumn<COrder, UUID> uidColumn = new TableColumn<COrder, UUID>("UId");
-            uidColumn.setCellValueFactory(new PropertyValueFactory<COrder, UUID>("uid"));
-            table.getColumns().add(uidColumn);
-            TableColumn<COrder, UUID> gidColumn = new TableColumn<COrder, UUID>("GId");
-            gidColumn.setCellValueFactory(new PropertyValueFactory<COrder, UUID>("gid"));
-            table.getColumns().add(gidColumn);
-            TableColumn<COrder, String> dateColumn = new TableColumn<COrder, String>("Date of buy");
-            //dateColumn.setCellValueFactory(new PropertyValueFactory<CUser, String>("datebirth"));
-            dateColumn.setCellValueFactory(celldata -> {
-                return new ObservableValue<String>() {
-                    @Override
-                    public void addListener(ChangeListener<? super String> changeListener) {
-
-                    }
-
-                    @Override
-                    public void removeListener(ChangeListener<? super String> changeListener) {
-
-                    }
-
-                    @Override
-                    public String getValue() {
-                        return celldata.getValue().getDate().toString();
-                    }
-
-                    @Override
-                    public void addListener(InvalidationListener invalidationListener) {
-
-                    }
-
-                    @Override
-                    public void removeListener(InvalidationListener invalidationListener) {
-
-                    }
-                } ;
-            });
-            table.getColumns().add(dateColumn);
-            leaf1.setAlignment(Pos.BASELINE_CENTER);
-            leaf1.setHgrow(table, Priority.ALWAYS);
-            leaf1.setVgrow(table, Priority.ALWAYS);
-            leaf1.add(table,0,0);
-            stage1.show();
-            stage1.alwaysOnTopProperty();
+            InfoOrders infoOrders = new InfoOrders();
         });
         button4.setOnAction(e ->{
-
+            InfoReport infoReport = new InfoReport();
         });
         leaf.add(label1,0,0);
         leaf.add(label2,0,1);
@@ -412,26 +293,5 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
-    }
-    private void UserView(){
-        try {Session session = CConfigHibernate.getSessionFactory().openSession();
-            session.beginTransaction();
-
-            for (int i = 0; i < usermas.size(); i++){
-                session.save(usermas.get(i));
-            }
-            for (int i = 0; i < goodmas.size(); i++){
-                session.save(goodmas.get(i));
-            }
-            for (int i = 0; i < ordermas.size(); i++){
-                session.save(ordermas.get(i));
-            }
-
-            session.getTransaction().commit();
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
     }
 }

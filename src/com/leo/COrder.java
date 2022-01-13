@@ -12,12 +12,12 @@ public class COrder{
     @GeneratedValue(generator = "UUIDGenerator")
     @Column(name = "id", updatable = true, nullable = false)
     public UUID id;
-    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
-    @GeneratedValue(generator = "UUIDGenerator")
+    /*@GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
+    @GeneratedValue(generator = "UUIDGenerator")*/
     @Column(name = "uid", updatable = true, nullable = true)
     private UUID Uid;
-    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
-    @GeneratedValue(generator = "UUIDGenerator")
+    /*@GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
+    @GeneratedValue(generator = "UUIDGenerator")*/
     @Column(name = "gid", updatable = true, nullable = true)
     private UUID Gid;
     @Column(name = "datebirth", updatable = true, columnDefinition = "Date")
